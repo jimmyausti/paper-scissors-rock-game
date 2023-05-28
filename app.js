@@ -11,21 +11,43 @@ function computerOutput() {
   }
 }
 
-function jankenpon(userChoice, computerChoice) {
+let results = {
+  playerScore: 0,
+  computerScore: 0,
+};
+
+function playRound(userChoice, computerChoice) {
   if (userChoice === computerChoice) {
-    return "DRAW";
+    console.log(
+      `DRAW: ${userChoice} is equal to ${computerChoice} ... End result: `
+    );
   } else if (
     (userChoice === "rock" && computerChoice === "paper") ||
     (userChoice === "paper" && computerChoice === "scissors") ||
     (userChoice === "scissors" && computerChoice === "rock")
   ) {
-    return `LOSS: ${computerChoice} beats ${userChoice}`;
-  } else if ((userChoice === 'rock' && computerChoice === 'scissors') || (userChoice === 'scissors' && computerChoice === 'paper') || (userChoice === 'paper' && computerChoice === 'rock')) {
-      return `WIN: ${userChoice} beats ${computerChoice}`;
-  } else return 'Please put in a valid answer'
+    console.log(`LOSS: ${computerChoice} beats ${userChoice} ... End result: `);
+    return results.computerScore++;
+  } else if (
+    (userChoice === "rock" && computerChoice === "scissors") ||
+    (userChoice === "scissors" && computerChoice === "paper") ||
+    (userChoice === "paper" && computerChoice === "rock")
+  ) {
+    console.log(`WIN: ${userChoice} beats ${computerChoice} ... End result: `);
+    return results.playerScore++;
+  } else return console.log("Please put in a valid answer");
 }
 
-let computerChoice = computerOutput();
-let userChoice = prompt("Rock, Paper or Scissors? (lowercase only)");
+function game() {
+  for (let i = 1; i <= 5; ++i) {
+    let playerChoice = prompt("Rock, Paper or Scissors?").toLowerCase();
+    let computerChoice = computerOutput().toLowerCase();
+    playRound(playerChoice, computerChoice);
+    console.log(results);
+  }
+  if (results.computerScore >= results.playerScore) {
+    console.log("C'mon! Try again and beat the computer!");
+  } else console.log("Good job! You are a master at Jan-Ken-Pon!");
+}
 
-console.log(jankenpon(userChoice, computerChoice))
+console.log(game());
