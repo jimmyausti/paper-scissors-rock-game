@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0; 
+}
+
+#player-input, #results-computer {
+    margin: 1rem auto;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: blue;
+}

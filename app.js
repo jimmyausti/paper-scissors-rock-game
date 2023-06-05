@@ -1,53 +1,82 @@
-function computerOutput() {
+  
+
+const computerOutput = () => {
   switch (Math.floor(Math.random() * 3)) {
     case 0:
-      return "rock";
+      return "Rock";
     case 1:
-      return "scissors";
+      return "Scissors";
     case 2:
-      return "paper";
+      return "Paper";
     default:
       return null;
   }
-}
-
-let results = {
-  playerScore: 0,
-  computerScore: 0,
 };
 
-function playRound(userChoice, computerChoice) {
-  if (userChoice === computerChoice) {
-    console.log(
-      `DRAW: ${userChoice} is equal to ${computerChoice} ... End result: `
-    );
-  } else if (
-    (userChoice === "rock" && computerChoice === "paper") ||
-    (userChoice === "paper" && computerChoice === "scissors") ||
-    (userChoice === "scissors" && computerChoice === "rock")
-  ) {
-    console.log(`LOSS: ${computerChoice} beats ${userChoice} ... End result: `);
-    return results.computerScore++;
-  } else if (
-    (userChoice === "rock" && computerChoice === "scissors") ||
-    (userChoice === "scissors" && computerChoice === "paper") ||
-    (userChoice === "paper" && computerChoice === "rock")
-  ) {
-    console.log(`WIN: ${userChoice} beats ${computerChoice} ... End result: `);
-    return results.playerScore++;
-  } else return console.log("Please put in a valid answer");
+const playerChoiceSelected = new Event("myevent");
+
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissors = document.querySelector("#scissors");
+const playerChoice = document.querySelector("#player-choice");
+const computerChoice = document.querySelector("#computer-choice");
+
+const resultContainer = document.querySelector("#results-computer");
+resultContainer.style.cssText = "border: 3px black dotted;";
+
+// Keeping the score
+const playerScoreElement = document.querySelector("#playerscore span");
+const computerScoreElement = document.querySelector("#computerscore span");
+
+let playerScore = 0;
+let computerScore = 0;
+
+function updateScore() {
+  playerScoreElement.textContent = playerScore;
+  computerScoreElement.textContent = computerScore;
 }
 
-function game() {
-  for (let i = 1; i <= 5; ++i) {
-    let playerChoice = prompt("Rock, Paper or Scissors?").toLowerCase();
-    let computerChoice = computerOutput().toLowerCase();
-    playRound(playerChoice, computerChoice);
-    console.log(results);
+function playRound(playerChoice, computerChoice) {
+  if (playerChoice === computerChoice) {
+    console.log("draw");
+  } else if (
+    (playerChoice === "Rock" && computerChoice === "Paper") ||
+    (playerChoice === "Paper" && computerChoice === "Scissors") ||
+    (playerChoice === "Scissors" && computerChoice === "Rock")
+  ) {
+    console.log("loss");
+    computerScore++;
+  } else if (
+    (playerChoice === "Rock" && computerChoice === "Scissors") ||
+    (playerChoice === "Scissors" && computerChoice === "Paper") ||
+    (playerChoice === "Paper" && computerChoice === "Rock")
+  ) {
+    console.log("win");
+    playerScore++;
+  } else {
+    return undefined;
   }
-  if (results.computerScore >= results.playerScore) {
-    console.log("C'mon! Try again and beat the computer!");
-  } else console.log("Good job! You are a master at Jan-Ken-Pon!");
+
+  updateScore();
 }
 
-console.log(game());
+rock.addEventListener("click", () => {
+  playerChoice.textContent = "Rock";
+  const computerSelection = computerOutput();
+  computerChoice.textContent = computerSelection;
+  playRound(playerChoice.textContent, computerChoice.textContent);
+});
+
+paper.addEventListener("click", () => {
+  playerChoice.textContent = "Paper";
+  const computerSelection = computerOutput();
+  computerChoice.textContent = computerSelection;
+  playRound(playerChoice.textContent, computerChoice.textContent);
+});
+
+scissors.addEventListener("click", () => {
+  playerChoice.textContent = "Scissors";
+  const computerSelection = computerOutput();
+  computerChoice.textContent = computerSelection;
+  playRound(playerChoice.textContent, computerChoice.textContent);
+});
